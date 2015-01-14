@@ -1,10 +1,132 @@
+body {
+  background:#f7f7f7;
+  font-family: 'Raleway', sans-serif;
+  font-size:16px;
+}
+
 #main-container{
   max-width: 1200px;
-  padding: 10px 25px;
+  padding: 30px 0;
   margin: 0px auto;
+}
+
+h1.otsikko {
+  font-family: 'Chewy', cursive;
+  color:#ffffff;
+  font-size:5em;
+}
+
+h1, h2, h3 {
+  font-family: 'Chewy', cursive;
 }
 
 .navbar .container-fluid{
   max-width: 1200px;
   margin: 0px auto;
+}
+
+.naama-etusivu {
+  background:#ffffff;
+  border:1px solid #dddddd;
+  padding:0;
+  margin:7px;
+}
+
+.naama-kuvabox {
+  display:block;
+  overflow:hidden;
+  height:350px;
+  width:100%;
+}
+
+.naama-tiedot .naama-kuvabox {
+  height:550px;
+  margin-top:30px;
+}
+
+.naama-kuva {
+  height:auto;
+  width:100%;
+  margin:0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.naama-linkki {
+  width:100%;
+  height:100%;
+  display: block;
+}
+
+.naama-caption {
+  margin: 0px auto;
+  width:100%;
+  text-align: center;
+  background-color: #FFF;
+}
+.naama-tiedot .naama-caption {
+  padding:10px;
+  font-size:1.3em;
+}
+
+.img-responsive {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input {
+  border-radius: 3px;
+  border:1px solid #ddd;
+  padding: 5px;
+  margin:2px 0 5px 0;
+}
+
+input.haku {
+  width:400px;
+  padding:10px;
+  margin-top:30px;
+}
+
+.hakurivi {
+  height:250px;
+  background:#67b168;
+}
+
+.kirjaudu {
+  height:250px;
+  background:#67b168;
+}
+
+.kirjaudu a {
+  color:#d6e9c6;
+}
+
+.container-fluid {
+  padding:0;
+}
+
+.navbar {
+  margin-bottom:0;
+}
+
+.navbar-default {
+  background-color:#67b168;
+  border:none;
+}
+
+.navbar-default .navbar-nav > li > a, .navbar-default .navbar-brand {
+  color:#ffffff;
+}
+
+@media (min-width: 992px) {
+  .col-md-4 {
+    width:32%;
+  }
+}
+@media (max-width: 750px) {
+  input.haku {
+    width:100%;
+  }
 }

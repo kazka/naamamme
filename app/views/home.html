@@ -1,9 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="page-header">
-    <h1>Tervetuloa Tsoha Bootstrappiin!</h1>
+
+  <div class="hakurivi">
+    <div class="col-md-12" style="text-align:center;">
+      <h1 class="otsikko">Naamamme</h1>
+      <input name="haku" class="haku" type="text" placeholder="Hae nimellä tai nickillä..." />
+    </div>
   </div>
 
-  <a href="http://kalleilv.users.cs.helsinki.fi/tsoha-materiaali" class="btn btn-primary btn-lg">Tutustu materiaaliin <span class="glyphicon glyphicon-chevron-right"></span></a>
+<div id="main-container">
+
+  <div class="row">
+    <div class="col-md-4 col-sm-6 naama-etusivu">
+      <div class="naama-kuvabox" style="background:url('assets/img/bcony.jpeg') center;background-size: cover;">
+        <a href="{{base_path}}/tiedot" class="naama-linkki">
+        </a>
+      </div>
+      <div class="naama-caption">
+        <h4>Brown ja Cony</h4>
+        <p>xxx</p>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 naama-etusivu">
+      <div class="naama-kuvabox" style="background:url('assets/img/IMG_3319.JPG') center;background-size: cover;">
+        <a href="#" class="naama-linkki">
+        </a>
+      </div>
+      <div class="naama-caption">
+        <h4>Puit</h4>
+        <p>xxx</p>
+      </div>
+    </div>
+
+    <div class="col-md-4 col-sm-6 naama-etusivu">
+      <div class="naama-kuvabox" style="background:url('assets/img/IMG_2330.jpg') center;background-size: cover;">
+        <a href="#" class="naama-linkki">
+        </a>
+      </div>
+      <div class="naama-caption">
+        <h4>Joku</h4>
+        <p>xxx</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="container-fluid">
+
+  <div class="kirjaudu">
+    <div class="col-md-12" style="text-align:center;">
+      <h3>Kirjaudu</h3>
+      <p><input type="text" placeholder="tunnus" /></p>
+      <p><input type="text" placeholder="salasana" /></p>
+      <p><button type="submit" class="btn btn-primary">Kirjaudu</button></p>
+      <p><a href="#">Ei vielä tunnusta? Liity tästä</a></p>
+    </div>
+  </div>
+
+</div>
+
 {% endblock %}

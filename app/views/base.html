@@ -7,7 +7,7 @@
 
     <title>
       {% block title %}
-        Tietokantasovellus
+        Naamamme
       {% endblock %}
     </title>
 
@@ -17,6 +17,10 @@
 
       <!-- Oma tyyli-tiedostomme -->
       <link href="{{base_path}}/assets/css/site.css" rel="stylesheet">
+
+      <link href='http://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+      <link href='http://fonts.googleapis.com/css?family=Chewy' rel='stylesheet' type='text/css'>
+
     {% endblock %}
   </head>
 
@@ -33,19 +37,19 @@
             <span class="icon-bar"></span>
           </button>
           <!-- Sovelluksen nimi -->
-          <a class="navbar-brand" href="{{base_path}}">Tsoha Bootstrap</a>
+          <a class="navbar-brand" href="{{base_path}}"><strong>Naamamme</strong></a>
         </div>
 
         <div class="collapse navbar-collapse" id="navigation">
           <ul class="nav navbar-nav">
             <!-- Navigaation linkit -->
-            <li><a href="{{base_path}}">Etusivu</a></li>
+            <li><a href="{{base_path}}/liity">Liity</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
-    <div id="main-container">
+    <div class="container-fluid">
       <!-- Dynaaminen sisältö tulee tähän -->
       {% block content %}{% endblock %}
     </div>

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="main-container">
+
+    <div class="row">
+            <div class="col-md-12 naama-tiedot">
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="naama-kuvabox" style="background:url('assets/img/bcony.jpeg') center;background-size: cover;">
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="naama-caption">
+                            <p><strong>Nimi:</strong> Brown ja Cony</p>
+                            <p><strong>Nick:</strong> xxx</p>
+
+                            <a href="{{base_path}}/muokkaus"><button type="submit" class="btn btn-default">Muokkaa</button></a>
+                            <button type="submit" class="btn btn-danger">Poista</button>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6 kommentit">
+            <h3>Kommentit</h3>
+            <button type="submit" class="btn btn-primary">Kommentoi</button>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+
+</div>
+
+{% endblock %}

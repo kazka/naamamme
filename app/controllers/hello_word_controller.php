@@ -6,6 +6,18 @@
    	  self::render_view('home.html');
     }
 
+    public static function tiedot(){
+      self::render_view('tiedot.html');
+    }
+
+    public static function muokkaus(){
+      self::render_view('muokkaus.html');
+    }
+
+    public static function liity(){
+      self::render_view('liity.html');
+    }
+
     public static function sandbox(){
       // Testaa koodiasi täällä	
       echo 'Hello World!';
