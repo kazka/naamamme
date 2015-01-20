@@ -1,5 +1,7 @@
 <?php
 
+require('app/models/kayttaja.php');
+
   class HelloWorldController extends BaseController{
 
     public static function index(){
@@ -20,6 +22,7 @@
 
     public static function sandbox(){
       // Testaa koodiasi täällä	
-      echo 'Hello World!';
+      $kayttajat = Kayttaja::all();
+      print_r($kayttajat);
     }
   }
