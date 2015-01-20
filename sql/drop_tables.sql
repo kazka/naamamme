@@ -1,1 +1,4 @@
--- Lisää DROP TABLE lauseet tähän tiedostoon
+DROP TABLE IF EXISTS Kayttaja;
+DROP TABLE IF EXISTS Kuva;
+DROP TABLE IF EXISTS Kommentti;
+DROP TABLE IF EXISTS Tykkays;
