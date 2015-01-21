@@ -44,6 +44,10 @@ class Kayttaja extends BaseModel{
         return null;
     }
 
+    public static function create() {
+
+    }
+
 }
 
 ?>

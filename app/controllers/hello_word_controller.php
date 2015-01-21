@@ -1,11 +1,9 @@
 <?php
 
-require('app/models/kayttaja.php');
-
   class HelloWorldController extends BaseController{
 
     public static function index(){
-   	  self::render_view('home.html');
+      self::render_view('home.html');
     }
 
     public static function tiedot(){
