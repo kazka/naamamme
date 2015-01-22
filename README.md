@@ -5,8 +5,8 @@ TKO-älyn opiskelijahuoneessa Gurulassa oleskelee paljon ihmisiä, mutta kuka on
   
   Naaman tiedot-sivu: http://kazkaupp.users.cs.helsinki.fi/tsoha/kayttaja/1
   
-  Naaman muokkaussivu: http://kazkaupp.users.cs.helsinki.fi/tsoha/muokkaus
+  Naaman muokkaussivu: http://kazkaupp.users.cs.helsinki.fi/tsoha/kayttaja/1/edit
   
-  Liittymissivu: http://kazkaupp.users.cs.helsinki.fi/tsoha/liity
+  Liittymissivu: http://kazkaupp.users.cs.helsinki.fi/tsoha/add
 
   Dokumentaatio: https://github.com/kazka/naamamme/blob/master/doc/dokumentaatio.pdf
