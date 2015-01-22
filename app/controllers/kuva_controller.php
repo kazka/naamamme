@@ -8,10 +8,10 @@ class KuvaController extends BaseController {
 //        self::render_view('home.html', array('kayttajat' => $kayttajat));
 //    }
 
-    public static function tiedot($id) {
+    public static function find($id) {
         $kuva = Kuva::find($id);
 
-        //self::render_view('tiedot.html', array('kayttaja' => $kayttaja));
+        self::render_view('kuva/kuvantiedot.html', array('kuva' => $kuva));
     }
 }
 

@@ -8,14 +8,6 @@
 //    HelloWorldController::tiedot();
 //  });
 
-  $app->get('/muokkaus', function() {
-    HelloWorldController::muokkaus();
-  });
-
-  $app->get('/liity', function() {
-    HelloWorldController::liity();
-  });
-
   $app->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
   });
@@ -29,6 +21,22 @@
     KayttajaController::index();
   });
 
+  $app->get('/add', function() {
+    KayttajaController::add();
+  });
+
   $app->get('/kayttaja/:id', function($id){
-    KayttajaController::tiedot($id);
+    KayttajaController::find($id);
+  });
+
+  $app->get('/kayttaja/:id/edit', function($id) {
+    KayttajaController::edit($id);
+  });
+
+  $app->post('/kayttaja', function(){
+    KayttajaController::store();
+  });
+
+  $app->post('/kayttaja/:id/destroy', function($id){
+    KayttajaController::destroy($id);
   });

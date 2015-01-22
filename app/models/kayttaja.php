@@ -44,8 +44,18 @@ class Kayttaja extends BaseModel{
         return null;
     }
 
-    public static function create() {
+    public static function create($luotava) {
+        $nick = $luotava['nick'];
+        $nimi = $luotava['nimi'];
+        $salasana = $luotava['salasana'];
 
+        $kayttaja = DB::query("INSERT INTO Kayttaja (nick, nimi, salasana) VALUES('$nick', '$nimi', '$salasana') RETURNING id");
+
+        return $kayttaja[0]['id'];
+    }
+
+    public static function destroy($id) {
+        DB::query("DELETE FROM Kayttaja WHERE id = :id", array('id' => $id));
     }
 
 }

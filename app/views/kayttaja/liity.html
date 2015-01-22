@@ -10,23 +10,23 @@
         <div class="col-md-6">
 
             <br/>
-            <form>
+            <form method="post" action="{{base_path}}/kayttaja">
                 <div class="form-group">
                     <label>Nick (toimii käyttäjätunnuksena)</label>
-                    <input class="form-control" value="" type="text">
-                </div>
-                <div class="form-group">
-                    <label>Salasana</label>
-                    <input class="form-control" value="" type="password">
+                    <input class="form-control" value="" type="text" name="nick">
                 </div>
                 <div class="form-group">
                     <label>Nimi</label>
-                    <input class="form-control" value="" type="text">
+                    <input class="form-control" value="" type="text" name="nimi">
                 </div>
                 <div class="form-group">
+                    <label>Salasana</label>
+                    <input class="form-control" value="" type="password" name="salasana">
+                </div>
+                <!--<div class="form-group">
                     <label>Kuva</label>
                     <input class="form-control" value="Lataa uusi kuva" type="file">
-                </div>
+                </div>-->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Liity</button>
                 </div>

@@ -52,7 +52,7 @@ class Kuva extends BaseModel{
     public static function kayttajankuvat($kayttaja_id) {
         $kuvat = array();
 
-        $rivit = DB::query('SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id');
+        $rivit = DB::query('SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id', array('kayttaja_id' => $kayttaja_id));
 
         foreach ($rivit as $rivi) {
             $kuvat[] = new Kuva(array(

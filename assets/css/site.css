@@ -38,10 +38,20 @@ h1, h2, h3 {
   height:350px;
   width:100%;
 }
+.naama-kuvabox-thumb {
+  display:block;
+  overflow:hidden;
+  height:100px;
+  margin:10px 10px 10px 0;
+}
 
 .naama-tiedot .naama-kuvabox {
   height:550px;
   margin-top:30px;
+}
+
+.naama-tiedot {
+
 }
 
 .naama-kuva {
@@ -123,5 +133,10 @@ input.haku {
 @media (max-width: 750px) {
   input.haku {
     width:100%;
+  }
+}
+@media (max-width: 1024px) {
+  .col-sm-6.naama-etusivu {
+    margin:7px 0;
   }
 }
