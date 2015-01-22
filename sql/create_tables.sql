@@ -8,7 +8,8 @@ CREATE TABLE Kuva(
   id SERIAL PRIMARY KEY,
   kayttaja_id INTEGER REFERENCES Kayttaja(id),
   url varchar(255) NOT NULL,
-  aika timestamp
+  aika timestamp,
+  paakuva boolean
 );
 CREATE TABLE Kommentti(
   id SERIAL PRIMARY KEY,
