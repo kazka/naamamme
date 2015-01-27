@@ -33,6 +33,10 @@
     KayttajaController::edit($id);
   });
 
+  $app->post('/kayttaja/:id/edit', function($id) {
+    KayttajaController::update($id);
+  });
+
   $app->post('/kayttaja', function(){
     KayttajaController::store();
   });
