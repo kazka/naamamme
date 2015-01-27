@@ -4,7 +4,7 @@
 
 <div id="main-container">
 
-    <h1>Muokkaa naamaa: {{kayttaja.nick}}</h1>
+    <h1>Muokkaa naamaa: {{attributes.nick}}</h1>
 
 <div class="row">
     <div class="col-md-6">
@@ -13,16 +13,20 @@
         <form>
             <div class="form-group">
                 <label>Nick</label>
-                <input class="form-control" value="{{kayttaja.nick}}" type="text">
+                <input class="form-control" value="{{attributes.nick}}" type="text" name="nick">
             </div>
             <div class="form-group">
                 <label>Nimi</label>
-                <input class="form-control" value="{{kayttaja.nimi}}" type="text">
+                <input class="form-control" value="{{attributes.nimi}}" type="text" name="nimi">
             </div>
             <div class="form-group">
-                <label>Kuva</label>
-                <input class="form-control" value="Lataa uusi kuva" type="file">
+                <label>Salasana</label>
+                <input class="form-control" value="{{attributes.nimi}}" type="password" name="salasana">
             </div>
+            <!--<div class="form-group">
+                <label>Kuva</label>
+                <input class="form-control" value="Lataa uusi kuva" type="file" name="kuva">
+            </div>-->
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Tallenna</button>
             </div>

@@ -18,19 +18,29 @@ class KayttajaController extends BaseController {
     public static function store() {
         $params = $_POST;
 
-        $id = Kayttaja::create(array(
+        $attributes = array(
             'nick' => $params['nick'],
             'nimi' => $params['nimi'],
             'salasana' => $params['salasana']
-        ));
+        );
 
-        self::redirect_to('/kayttaja/' . $id, array('viesti' => 'Kiitos liittymisestä!'));
+        $kayttaja = new Kayttaja($attributes);
+        $errors = $kayttaja->errors();
+
+        if(count($errors) == 0) {
+            $id = Kayttaja::create($attributes);
+
+            self::redirect_to('/kayttaja/' . $id, array('message' => 'Kiitos liittymisestä!'));
+        } else {
+            self::render_view('/kayttaja/liity.html', array('errors' => $errors, 'attributes' => $attributes));
+        }
+
     }
 
     public static function destroy($id) {
         Kayttaja::destroy($id);
 
-        self::redirect_to('/kayttaja', array('viesti' => 'Käyttäjä on poistettu.'));
+        self::redirect_to('/kayttaja', array('message' => 'Käyttäjä on poistettu.'));
     }
 
     public static function add() {
@@ -40,7 +50,28 @@ class KayttajaController extends BaseController {
     public static function edit($id){
         $kayttaja = Kayttaja::find($id);
 
-        self::render_view('/kayttaja/muokkaus.html', array('kayttaja' => $kayttaja));
+        self::render_view('/kayttaja/muokkaus.html', array('attributes' => $kayttaja));
+    }
+
+    public static function update($id) {
+        $params = $_POST;
+
+        $attributes = array(
+            'nick' => $params['nick'],
+            'nimi' => $params['nimi'],
+            'salasana' => $params['salasana']
+        );
+
+        $kayttaja = new Kayttaja($attributes);
+        $errors = $kayttaja->errors();
+
+        if(count($errors) > 0) {
+            self::render_view('kayttaja/muokkaus.html', array('errors' => $errors, 'attributes' => $attributes));
+        } else  {
+            Kayttaja::update($id, $attributes);
+
+            redirect_to('/kayttaja/' . $id, array('message' => 'Tietosi on päivitetty.'));
+        }
     }
 }
 

@@ -5,6 +5,13 @@
 <div id="main-container">
 
     <div class="row">
+
+            {% if message is defined %}
+            <div class="col-md-12 message">
+                <h3>{{message}}</h3>
+            </div>
+            {% endif %}
+
             <div class="col-md-12 naama-tiedot">
                 <div class="row">
                     <div class="col-md-3"></div>
