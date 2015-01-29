@@ -32,7 +32,7 @@ class KayttajaController extends BaseController {
 
             self::redirect_to('/kayttaja/' . $id, array('message' => 'Kiitos liittymisestä!'));
         } else {
-            self::render_view('/kayttaja/liity.html', array('errors' => $errors, 'attributes' => $attributes));
+            self::render_view('kayttaja/liity.html', array('errors' => $errors, 'attributes' => $attributes));
         }
 
     }
@@ -44,13 +44,13 @@ class KayttajaController extends BaseController {
     }
 
     public static function add() {
-        self::render_view('/kayttaja/liity.html');
+        self::render_view('kayttaja/liity.html');
     }
 
     public static function edit($id){
         $kayttaja = Kayttaja::find($id);
 
-        self::render_view('/kayttaja/muokkaus.html', array('attributes' => $kayttaja));
+        self::render_view('kayttaja/muokkaus.html', array('attributes' => $kayttaja));
     }
 
     public static function update($id) {
@@ -72,6 +72,25 @@ class KayttajaController extends BaseController {
 
             redirect_to('/kayttaja/' . $id, array('message' => 'Tietosi on päivitetty.'));
         }
+    }
+
+    public static function login() {
+        self::render_view('kayttaja/kirjaudu.html');
+    }
+
+    public static function handle_login() {
+        $params = $_POST;
+
+        $kayttaja =  Kayttaja::authenticate($params['nick'], $params['salasana']);
+
+        if(!$kayttaja) {
+            self::redirect_to('/login', array('error' => 'Väärä käyttäjätunnus tai salasana.'));
+        } else {
+            $_SESSION['kayttaja'] = $kayttaja->id;
+
+            self::redirect_to('/', array('message' => 'Tervetuloa ' . $kayttaja->nick . ':3'));
+        }
+
     }
 }
 

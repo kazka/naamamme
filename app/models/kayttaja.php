@@ -68,6 +68,15 @@ class Kayttaja extends BaseModel{
         DB::query("UPDATE Kayttaja SET nick = :nick, nimi = :nimi, salasana = :salasana WHERE id = :id", array('id' => $id, 'nick' => $nick, 'nimi' => $nimi, 'salasana' => $salasana));
     }
 
+    public static function authenticate($nick, $salasana) {
+        $kayttajanSalasana = DB::query("SELECT salasana FROM Kayttaja WHERE nick = :nick", array('nick' => $nick));
+
+        if($salasana == $kayttajanSalasana) {
+            $kayttaja = DB::query("SELECT FROM Kayttaja WHERE salasana = :salasana", array('salasana' => $salasana));
+            return $kayttaja;
+        }
+    }
+
     public function validate_nick() {
         $errors = array();
 

@@ -44,3 +44,13 @@
   $app->post('/kayttaja/:id/destroy', function($id){
     KayttajaController::destroy($id);
   });
+
+  $app->get('/login', function(){
+    // Kirjautumislomakkeen esittäminen
+    KayttajaController::login();
+  });
+
+  $app->post('/login', function(){
+    // Kirjautumisen käsittely
+    KayttajaController::handle_login();
+  });

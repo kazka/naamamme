@@ -41,9 +41,13 @@
   <div class="kirjaudu">
     <div class="col-md-12" style="text-align:center;">
       <h3>Kirjaudu</h3>
-      <p><input type="text" placeholder="tunnus" /></p>
-      <p><input type="text" placeholder="salasana" /></p>
-      <p><button type="submit" class="btn btn-primary">Kirjaudu</button></p>
+
+      <form method="post" action="{{base_path}}/login">
+          <p><input  placeholder="Käyttäjätunnus" type="text" name="nick"></p>
+          <p><input placeholder="Salasana" type="password" name="salasana"></p>
+          <button type="submit" class="btn btn-primary">Kirjaudu</button>
+      </form>
+
       <p><a href="{{base_path}}/liity">Ei vielä tunnusta? Liity tästä</a></p>
     </div>
   </div>
