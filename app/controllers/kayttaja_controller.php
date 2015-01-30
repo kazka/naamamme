@@ -25,6 +25,9 @@ class KayttajaController extends BaseController {
         );
 
         $kayttaja = new Kayttaja($attributes);
+
+        Kuva::upload($_FILES['kuva']);
+
         $errors = $kayttaja->errors();
 
         if(count($errors) == 0) {

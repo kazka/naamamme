@@ -46,6 +46,19 @@ class Kuva extends BaseModel{
 
     public static function create() {
 
+
+    }
+
+    public static function upload($file) {
+        define("UPLOAD_DIR", "/home/kazkaupp/htdocs/tsoha/uploads/");
+
+        $name = preg_replace("/[^A-Z0-9._-]/i", "_", $file["name"]);
+        $success = move_uploaded_file($file["tmp_name"], UPLOAD_DIR . $name);
+
+        if (!$success) {
+            echo "<p>Unable to save file.</p>";
+            exit;
+        }
     }
 
     // haetaan tietyn käyttäjän kuvat
