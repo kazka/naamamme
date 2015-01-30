@@ -46,11 +46,13 @@
   });
 
   $app->get('/login', function(){
-    // Kirjautumislomakkeen esittäminen
     KayttajaController::login();
   });
 
   $app->post('/login', function(){
-    // Kirjautumisen käsittely
     KayttajaController::handle_login();
+  });
+
+  $app->post('/logout', function() {
+    KayttajaController::logout();
   });

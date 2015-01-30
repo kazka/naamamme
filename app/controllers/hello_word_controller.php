@@ -19,8 +19,9 @@
 //    }
 
     public static function sandbox(){
-      // Testaa koodiasi täällä	
-      $kayttajat = Kayttaja::all();
-      print_r($kayttajat);
+      // Testaa koodiasi täällä
+      $attributes = array('nick'=>'joku2', 'nimi'=>'masa', 'salasana'=>'nfcaio');
+      $kayttaja = Kayttaja::update(5, $attributes);
+
     }
   }

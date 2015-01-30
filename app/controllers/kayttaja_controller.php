@@ -40,7 +40,7 @@ class KayttajaController extends BaseController {
     public static function destroy($id) {
         Kayttaja::destroy($id);
 
-        self::redirect_to('/kayttaja', array('message' => 'Käyttäjä on poistettu.'));
+        self::redirect_to('/', array('message' => 'Käyttäjä on poistettu.'));
     }
 
     public static function add() {
@@ -70,7 +70,7 @@ class KayttajaController extends BaseController {
         } else  {
             Kayttaja::update($id, $attributes);
 
-            redirect_to('/kayttaja/' . $id, array('message' => 'Tietosi on päivitetty.'));
+            self::redirect_to('/kayttaja/' . $id, array('message' => 'Tietosi on päivitetty.'));
         }
     }
 
@@ -88,9 +88,15 @@ class KayttajaController extends BaseController {
         } else {
             $_SESSION['kayttaja'] = $kayttaja->id;
 
-            self::redirect_to('/', array('message' => 'Tervetuloa ' . $kayttaja->nick . ':3'));
+            self::redirect_to('/', array('message' => 'Tervetuloa ' . $kayttaja->nick . ' :3'));
         }
 
+    }
+
+    public static function logout() {
+        $_SESSION['kayttaja'] = null;
+
+        self::redirect_to('/', array('message' => "Olet kirjautunut ulos 3:"));
     }
 }
 

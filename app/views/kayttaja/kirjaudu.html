@@ -6,12 +6,10 @@
 
     <h1>Kirjaudu</h1>
 
-    {% if errors %}
+    {% if error is defined %}
     <div class="alert alert-danger">
         <ul>
-            {% for error in errors %}
             <li>{{error}}</li>
-            {% endfor %}
         </ul>
     </div>
     {% endif %}

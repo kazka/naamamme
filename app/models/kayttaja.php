@@ -69,10 +69,20 @@ class Kayttaja extends BaseModel{
     }
 
     public static function authenticate($nick, $salasana) {
-        $kayttajanSalasana = DB::query("SELECT salasana FROM Kayttaja WHERE nick = :nick", array('nick' => $nick));
+        $rivit = DB::query("SELECT * FROM Kayttaja WHERE nick = :nick AND salasana = :salasana", array('nick' => $nick, 'salasana' => $salasana));
 
-        if($salasana == $kayttajanSalasana) {
-            $kayttaja = DB::query("SELECT FROM Kayttaja WHERE salasana = :salasana", array('salasana' => $salasana));
+        if(count($rivit) == 0) {
+            return false;
+        } else {
+            $rivi = $rivit[0];
+
+            $kayttaja = new Kayttaja(array(
+                'id' => $rivi['id'],
+                'nick' => $rivi['nick'],
+                'nimi' => $rivi['nimi'],
+                'salasana' => $rivi['salasana']
+            ));
+
             return $kayttaja;
         }
     }
