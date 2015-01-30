@@ -44,21 +44,46 @@ class Kuva extends BaseModel{
         return null;
     }
 
-    public static function create() {
+    public static function create($kayttaja_id, $url) {
+        $paakuva = 'true';
+        $kuvat = DB::query("SELECT COUNT(*) FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
 
+        if(count($kuvat) > 1) {
+            $paakuva = 'false';
+        }
 
+        DB::query("INSERT INTO Kuva (kayttaja_id, url, aika, paakuva) VALUES ('$kayttaja_id', '$url', 'NOW()', '$paakuva')");
     }
 
     public static function upload($file) {
         define("UPLOAD_DIR", "/home/kazkaupp/htdocs/tsoha/uploads/");
 
-        $name = preg_replace("/[^A-Z0-9._-]/i", "_", $file["name"]);
-        $success = move_uploaded_file($file["tmp_name"], UPLOAD_DIR . $name);
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            echo "<p>An error occurred.</p>";
+            exit;
+        }
+
+        $name = preg_replace("/[^A-Z0-9._-]/i", "_", $file['name']);
+
+        $i = 0;
+        $parts = pathinfo($name);
+        while (file_exists(UPLOAD_DIR . $name)) {
+            $i++;
+            $name = $parts['filename'] . "-" . $i . "." . $parts['extension'];
+        }
+
+        $success = move_uploaded_file($file['tmp_name'], UPLOAD_DIR . $name);
 
         if (!$success) {
             echo "<p>Unable to save file.</p>";
             exit;
         }
+
+        chmod(UPLOAD_DIR . $name, 0644);
+
+        $url = 'http://kazkaupp.users.cs.helsinki.fi/tsoha/uploads/' . $name;
+
+        return $url;
     }
 
     // haetaan tietyn käyttäjän kuvat

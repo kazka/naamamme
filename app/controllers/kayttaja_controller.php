@@ -26,12 +26,15 @@ class KayttajaController extends BaseController {
 
         $kayttaja = new Kayttaja($attributes);
 
-        Kuva::upload($_FILES['kuva']);
-
         $errors = $kayttaja->errors();
 
         if(count($errors) == 0) {
             $id = Kayttaja::create($attributes);
+
+            if (!empty($_FILES['kuva'])) {
+                $url = Kuva::upload($_FILES['kuva']);
+                Kuva::create($id, $url);
+            }
 
             self::redirect_to('/kayttaja/' . $id, array('message' => 'Kiitos liittymisestä!'));
         } else {
