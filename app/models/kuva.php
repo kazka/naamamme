@@ -2,7 +2,7 @@
 
 class Kuva extends BaseModel{
 
-    public $id, $kayttaja_id, $url, $aika;
+    public $id, $kayttaja_id, $url, $aika, $paakuva;
 
     public function __construct($attributes){
         parent::__construct($attributes);
@@ -18,7 +18,8 @@ class Kuva extends BaseModel{
                 'id' => $rivi['id'],
                 'kayttaja_id' => $rivi['kayttaja_id'],
                 'url' => $rivi['url'],
-                'aika' => $rivi['aika']
+                'aika' => $rivi['aika'],
+                'paakuva' => $rivi['paakuva']
             ));
         }
 
@@ -35,7 +36,8 @@ class Kuva extends BaseModel{
                 'id' => $rivi['id'],
                 'kayttaja_id' => $rivi['kayttaja_id'],
                 'url' => $rivi['url'],
-                'aika' => $rivi['aika']
+                'aika' => $rivi['aika'],
+                'paakuva' => $rivi['paakuva']
             ));
 
             return $kuva;
@@ -48,7 +50,7 @@ class Kuva extends BaseModel{
         $paakuva = 'true';
         $kuvat = DB::query("SELECT COUNT(*) FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
 
-        if(count($kuvat) > 1) {
+        if(count($kuvat) >= 1) {
             $paakuva = 'false';
         }
 
@@ -59,7 +61,7 @@ class Kuva extends BaseModel{
         define("UPLOAD_DIR", "/home/kazkaupp/htdocs/tsoha/uploads/");
 
         if ($file['error'] !== UPLOAD_ERR_OK) {
-            echo "<p>An error occurred.</p>";
+            echo "<p>Virhe kuvan latauksessa.</p>";
             exit;
         }
 
@@ -75,7 +77,7 @@ class Kuva extends BaseModel{
         $success = move_uploaded_file($file['tmp_name'], UPLOAD_DIR . $name);
 
         if (!$success) {
-            echo "<p>Unable to save file.</p>";
+            echo "<p>Kuvaa ei voitu tallentaa.</p>";
             exit;
         }
 
@@ -97,7 +99,8 @@ class Kuva extends BaseModel{
                 'id' => $rivi['id'],
                 'kayttaja_id' => $rivi['kayttaja_id'],
                 'url' => $rivi['url'],
-                'aika' => $rivi['aika']
+                'aika' => $rivi['aika'],
+                'paakuva' => $rivi['paakuva']
             ));
         }
 

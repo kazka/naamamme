@@ -4,8 +4,9 @@ class KayttajaController extends BaseController {
 
     public static function index() {
         $kayttajat = Kayttaja::all();
+        $kuvat = Kuva::all();
 
-        self::render_view('home.html', array('kayttajat' => $kayttajat));
+        self::render_view('home.html', array('kayttajat' => $kayttajat, 'kuvat' => $kuvat));
     }
 
     public static function find($id) {
@@ -75,6 +76,11 @@ class KayttajaController extends BaseController {
             self::render_view('kayttaja/muokkaus.html', array('errors' => $errors, 'attributes' => $attributes));
         } else  {
             Kayttaja::update($id, $attributes);
+
+            if (!empty($_FILES['kuva'])) {
+                $url = Kuva::upload($_FILES['kuva']);
+                Kuva::create($id, $url);
+            }
 
             self::redirect_to('/kayttaja/' . $id, array('message' => 'Tietosi on päivitetty.'));
         }

@@ -21,12 +21,16 @@
 
     {% for kayttaja in kayttajat %}
     <div class="col-md-4 col-sm-6 naama-etusivu">
-      <div class="naama-kuvabox" style="background:url('assets/img/bcony.jpeg') center;background-size: cover;">
-        <a href="{{base_path}}/kayttaja/{{kayttaja.id}}" class="naama-linkki">
-        </a>
-      </div>
+      {% for kuva in kuvat %}
+        {% if (kuva.paakuva == true) and (kuva.kayttaja_id == kayttaja.id) %}
+          <div class="naama-kuvabox" style="background:url('{{kuva.url}}') center;background-size: cover;">
+            <a href="{{base_path}}/kayttaja/{{kayttaja.id}}" class="naama-linkki">
+            </a>
+          </div>
+        {% endif %}
+      {% endfor %}
       <div class="naama-caption">
-        <h4>{{kayttaja.nick}}</h4>
+        <h4><a href="{{base_path}}/kayttaja/{{kayttaja.id}}" class="naama-linkki">{{kayttaja.nick}}</a></h4>
         <p>{{kayttaja.nimi}}</p>
       </div>
     </div>

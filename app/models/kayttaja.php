@@ -97,6 +97,12 @@ class Kayttaja extends BaseModel{
             $errors[] = 'Nickin on oltava vähintään 3 merkkiä pitkä.';
         }
 
+//        $rivit = DB::query("SELECT COUNT(*) FROM Kayttaja WHERE nick = :nick", array('nick' => $this->nick));
+//
+//        if(count($rivit) > 0 ) {
+//            $errors[] = 'Nick on varattu.';
+//        }
+
         return $errors;
     }
 
