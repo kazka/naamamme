@@ -11,7 +11,7 @@ class KayttajaController extends BaseController {
 
     public static function find($id) {
         $kayttaja = Kayttaja::find($id);
-        $kuvat = Kuva::kayttajankuvat($id);
+        $kuvat = Kuva::find_by_user($id);
 
         self::render_view('kayttaja/tiedot.html', array('kayttaja' => $kayttaja, 'kuvat' => $kuvat));
     }
@@ -45,6 +45,7 @@ class KayttajaController extends BaseController {
     }
 
     public static function destroy($id) {
+        Kuva::destroy_from_user($id);
         Kayttaja::destroy($id);
 
         self::redirect_to('/', array('message' => 'Käyttäjä on poistettu.'));

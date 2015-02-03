@@ -87,6 +87,10 @@ class Kayttaja extends BaseModel{
         }
     }
 
+    public function kuvat() {
+        return Kuva::find_by_user($this->id);
+    }
+
     public function validate_nick() {
         $errors = array();
 
@@ -97,11 +101,11 @@ class Kayttaja extends BaseModel{
             $errors[] = 'Nickin on oltava vähintään 3 merkkiä pitkä.';
         }
 
-//        $rivit = DB::query("SELECT COUNT(*) FROM Kayttaja WHERE nick = :nick", array('nick' => $this->nick));
-//
-//        if(count($rivit) > 0 ) {
-//            $errors[] = 'Nick on varattu.';
-//        }
+        $rivit = DB::query("SELECT COUNT(*) as riveja FROM Kayttaja WHERE nick = :nick", array('nick' => $this->nick));
+
+        if(($rivit[0]['riveja']) > 0 ) {
+            $errors[] = 'Nick on varattu.';
+        }
 
         return $errors;
     }

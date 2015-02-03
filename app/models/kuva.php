@@ -48,9 +48,9 @@ class Kuva extends BaseModel{
 
     public static function create($kayttaja_id, $url) {
         $paakuva = 'true';
-        $kuvat = DB::query("SELECT COUNT(*) FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
+        $kuvat = DB::query("SELECT COUNT(*) as kuvia FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
 
-        if(count($kuvat) >= 1) {
+        if(($kuvat[0]['kuvia']) >= 1) {
             $paakuva = 'false';
         }
 
@@ -89,7 +89,7 @@ class Kuva extends BaseModel{
     }
 
     // haetaan tietyn käyttäjän kuvat
-    public static function kayttajankuvat($kayttaja_id) {
+    public static function find_by_user($kayttaja_id) {
         $kuvat = array();
 
         $rivit = DB::query('SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id', array('kayttaja_id' => $kayttaja_id));
@@ -105,6 +105,14 @@ class Kuva extends BaseModel{
         }
 
         return $kuvat;
+    }
+
+    public static function destroy($id) {
+        DB::query("DELETE FROM Kuva WHERE id = :id", array('id' => $id));
+    }
+
+    public static function destroy_from_user($kayttaja_id) {
+        DB::query("DELETE FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
     }
 
 }

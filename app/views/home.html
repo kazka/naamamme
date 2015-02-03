@@ -10,7 +10,6 @@
   </div>
 
 <div id="main-container" class="etusivu">
-
   <div class="row">
 
     {% if message is defined %}
@@ -21,7 +20,7 @@
 
     {% for kayttaja in kayttajat %}
     <div class="col-md-4 col-sm-6 naama-etusivu">
-      {% for kuva in kuvat %}
+      {% for kuva in kayttaja.kuvat %}
         {% if (kuva.paakuva == true) and (kuva.kayttaja_id == kayttaja.id) %}
           <div class="naama-kuvabox" style="background:url('{{kuva.url}}') center;background-size: cover;">
             <a href="{{base_path}}/kayttaja/{{kayttaja.id}}" class="naama-linkki">
