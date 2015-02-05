@@ -21,7 +21,7 @@
     {% for kayttaja in kayttajat %}
     <div class="col-md-4 col-sm-6 naama-etusivu">
       {% for kuva in kayttaja.kuvat %}
-        {% if (kuva.paakuva == true) and (kuva.kayttaja_id == kayttaja.id) %}
+        {% if (kuva.paakuva == true) %}
           <div class="naama-kuvabox" style="background:url('{{kuva.url}}') center;background-size: cover;">
             <a href="{{base_path}}/kayttaja/{{kayttaja.id}}" class="naama-linkki">
             </a>
@@ -43,6 +43,7 @@
 
   <div class="kirjaudu">
     <div class="col-md-12" style="text-align:center;">
+      {% if not user_logged_in %}
       <h3>Kirjaudu</h3>
 
       <form method="post" action="{{base_path}}/login">
@@ -53,6 +54,7 @@
 
       <p><a href="{{base_path}}/add">Ei vielä tunnusta? Liity tästä</a></p>
     </div>
+    {% endif %}
   </div>
 
 </div>

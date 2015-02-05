@@ -60,11 +60,6 @@ class Kuva extends BaseModel{
     public static function upload($file) {
         define("UPLOAD_DIR", "/home/kazkaupp/htdocs/tsoha/uploads/");
 
-        if ($file['error'] !== UPLOAD_ERR_OK) {
-            echo "<p>Virhe kuvan latauksessa.</p>";
-            exit;
-        }
-
         $name = preg_replace("/[^A-Z0-9._-]/i", "_", $file['name']);
 
         $i = 0;
@@ -89,7 +84,7 @@ class Kuva extends BaseModel{
     }
 
     // haetaan tietyn käyttäjän kuvat
-    public static function find_by_user($kayttaja_id) {
+    public static function find_by_kayttaja($kayttaja_id) {
         $kuvat = array();
 
         $rivit = DB::query('SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id', array('kayttaja_id' => $kayttaja_id));
@@ -111,8 +106,18 @@ class Kuva extends BaseModel{
         DB::query("DELETE FROM Kuva WHERE id = :id", array('id' => $id));
     }
 
-    public static function destroy_from_user($kayttaja_id) {
+    public static function destroy_from_kayttaja($kayttaja_id) {
         DB::query("DELETE FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
+    }
+
+    public static function check_filetype($file) {
+        $kuva = getimagesize($file);
+        $image_type = $kuva[2];
+
+        if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP))) {
+            return '';
+        }
+        return 'Tiedosto on väärää muotoa.';
     }
 
 }

@@ -11,7 +11,7 @@ class KayttajaController extends BaseController {
 
     public static function find($id) {
         $kayttaja = Kayttaja::find($id);
-        $kuvat = Kuva::find_by_user($id);
+        $kuvat = Kuva::find_by_kayttaja($id);
 
         self::render_view('kayttaja/tiedot.html', array('kayttaja' => $kayttaja, 'kuvat' => $kuvat));
     }
@@ -29,13 +29,20 @@ class KayttajaController extends BaseController {
 
         $errors = $kayttaja->errors();
 
+        if (empty($_FILES['kuva']['name'])) {
+            $errors[] = 'Kuva ei saa olla tyhjä.';
+        }
+        //if (!getimagesize($_FILES['kuva'])) {
+        //    $errors[] = 'Kuva on väärää muotoa.';
+        //}
+
+        //$errors[] = Kuva::check_filetype($_FILES['kuva']['name']);
+
         if(count($errors) == 0) {
             $id = Kayttaja::create($attributes);
 
-            if (!empty($_FILES['kuva'])) {
-                $url = Kuva::upload($_FILES['kuva']);
-                Kuva::create($id, $url);
-            }
+            $url = Kuva::upload($_FILES['kuva']);
+            Kuva::create($id, $url);
 
             self::redirect_to('/kayttaja/' . $id, array('message' => 'Kiitos liittymisestä!'));
         } else {
@@ -45,7 +52,7 @@ class KayttajaController extends BaseController {
     }
 
     public static function destroy($id) {
-        Kuva::destroy_from_user($id);
+        Kuva::destroy_from_kayttaja($id);
         Kayttaja::destroy($id);
 
         self::redirect_to('/', array('message' => 'Käyttäjä on poistettu.'));
@@ -56,6 +63,7 @@ class KayttajaController extends BaseController {
     }
 
     public static function edit($id){
+        self::check_logged_in();
         $kayttaja = Kayttaja::find($id);
 
         self::render_view('kayttaja/muokkaus.html', array('attributes' => $kayttaja));
@@ -65,23 +73,23 @@ class KayttajaController extends BaseController {
         $params = $_POST;
 
         $attributes = array(
-            'nick' => $params['nick'],
+            //'nick' => $params['nick'],
             'nimi' => $params['nimi'],
             'salasana' => $params['salasana']
         );
 
         $kayttaja = new Kayttaja($attributes);
-        $errors = $kayttaja->errors();
+        $errors = $kayttaja->validate_nimi();
 
         if(count($errors) > 0) {
             self::render_view('kayttaja/muokkaus.html', array('errors' => $errors, 'attributes' => $attributes));
         } else  {
             Kayttaja::update($id, $attributes);
 
-            if (!empty($_FILES['kuva'])) {
-                $url = Kuva::upload($_FILES['kuva']);
-                Kuva::create($id, $url);
-            }
+//            if (!empty($_FILES['kuva'])) {
+//                $url = Kuva::upload($_FILES['kuva']);
+//                Kuva::create($id, $url);
+//            }
 
             self::redirect_to('/kayttaja/' . $id, array('message' => 'Tietosi on päivitetty.'));
         }

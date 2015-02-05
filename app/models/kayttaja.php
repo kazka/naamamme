@@ -61,11 +61,11 @@ class Kayttaja extends BaseModel{
     }
 
     public static function update($id, $attributes) {
-        $nick = $attributes['nick'];
+        //$nick = $attributes['nick'];
         $nimi = $attributes['nimi'];
         $salasana = $attributes['salasana'];
 
-        DB::query("UPDATE Kayttaja SET nick = :nick, nimi = :nimi, salasana = :salasana WHERE id = :id", array('id' => $id, 'nick' => $nick, 'nimi' => $nimi, 'salasana' => $salasana));
+        DB::query("UPDATE Kayttaja SET nimi = :nimi, salasana = :salasana WHERE id = :id", array('id' => $id, 'nimi' => $nimi, 'salasana' => $salasana));
     }
 
     public static function authenticate($nick, $salasana) {
@@ -88,7 +88,7 @@ class Kayttaja extends BaseModel{
     }
 
     public function kuvat() {
-        return Kuva::find_by_user($this->id);
+        return Kuva::find_by_kayttaja($this->id);
     }
 
     public function validate_nick() {

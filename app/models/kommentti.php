@@ -46,15 +46,19 @@ class Kommentti extends BaseModel{
         return null;
     }
 
-    public static function create() {
+    public static function create($attributes) {
+        $kayttaja_id = $attributes['kayttaja_id'];
+        $kuva_id = $attributes['kuva_id'];
+        $kommenttiteksti = $attributes['kommenttiteksti'];
 
+        DB::query("INSERT INTO Kommentti (kayttaja_id, kuva_id, kommenttiteksti, aika) VALUES ('$kayttaja_id', '$kuva_id', '$kommenttiteksti', 'NOW()')");
     }
 
     // haetaan tietyn kuvan kommentit
-    public static function kuvankommentit($kuva_id) {
+    public static function find_by_kuva($kuva_id) {
         $kommentit = array();
 
-        $rivit = DB::query('SELECT * FROM Kommentti WHERE kuva_id = :kuva_id');
+        $rivit = DB::query('SELECT * FROM Kommentti WHERE kuva_id = :kuva_id', array('kuva_id' => $kuva_id));
 
         foreach ($rivit as $rivi) {
             $kommentit[] = new Kommentti(array(
@@ -67,6 +71,18 @@ class Kommentti extends BaseModel{
         }
 
         return $kommentit;
+    }
+
+    public static function destroy($id) {
+        DB::query("DELETE FROM Kommentti WHERE id = :id", array('id' => $id));
+    }
+
+    public static function destroy_from_kayttaja($kayttaja_id) {
+        DB::query("DELETE FROM Kommentti WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
+    }
+
+    public static function destroy_from_kuva($kuva_id) {
+        DB::query("DELETE FROM Kommentti WHERE kuva_id = :kuva_id", array('kuva_id' => $kuva_id));
     }
 
 }
