@@ -4,7 +4,7 @@
 
 <div id="main-container">
 
-    <h1>Hallitse kuvia: {{attributes.nick}}</h1>
+    <h1>Hallitse kuvia</h1>
 
     {% if errors %}
     <div class="alert alert-danger">
@@ -19,20 +19,42 @@
     <div class="row">
         <div class="col-md-6">
 
-            <br/>
-            <form method="post" action="{{base_path}}/kayttaja/{{attributes.id}}/kuvat/edit" enctype="multipart/form-data">
+            <br />
+            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja_id}}/kuvat/edit" enctype="multipart/form-data">
+
+                <div class="row">
+                    <table class="kuvienhallinta table table-hover table-bordered">
+                        <tr>
+                            <th>Kuva</th>
+                            <th>Pääkuva</th>
+                            <th>Poista</th>
+                        </tr>
+                    {% for kuva in kuvat %}
+                        <tr>
+                            <td><img src="{{kuva.url}}" height="100" /></td>
+                            <td><input type="radio" name="paakuva" value="{{kuva.id}}" {% if (kuva.paakuva) %} checked="checked" {% endif %} /></td>
+                            <td><input type="checkbox" name="poista[]" value="{{kuva.id}}" /></td>
+                        </tr>
+                    {% endfor %}
+                    </table>
+                </div>
+
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Tallenna kuva</button>
+                    <button type="submit" class="btn btn-primary">Tallenna kuvien tiedot</button>
                 </div>
             </form>
 
-            <form method="post" action="{{base_path}}/kayttaja/{{attributes.id}}/kuvat/add" enctype="multipart/form-data">
+            <br />
+
+            <h1>Lisää uusi kuva</h1>
+
+            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja_id}}/kuvat/add" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label>Kuva</label>
                     <input class="form-control" value="" type="file" name="kuva">
                 </div>
+                <!--<input type="hidden" value="{{kayttaja_id}}" name="kayttaja_id" />-->
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Tallenna kuva</button>
+                    <button type="submit" class="btn btn-primary">Lisää kuva</button>
                 </div>
             </form>
 

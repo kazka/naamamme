@@ -56,3 +56,15 @@
   $app->post('/logout', function() {
     KayttajaController::logout();
   });
+
+  $app->get('/kayttaja/:id/kuvat/edit', function($kayttaja_id) {
+    KuvaController::manage($kayttaja_id);
+  });
+
+  $app->post('/kayttaja/:id/kuvat/edit', function($kayttaja_id) {
+    KuvaController::update($kayttaja_id);
+  });
+
+  $app->post('/kayttaja/:id/kuvat/add', function($kayttaja_id){
+    KuvaController::store($kayttaja_id);
+  });

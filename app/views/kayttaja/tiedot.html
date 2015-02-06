@@ -18,12 +18,14 @@
                     <div class="col-md-6">
 
                         {% for kuva in kuvat %}
-                            {% if loop.first %}
+                            {% if (kuva.paakuva) %}
                                 <div class="naama-kuvabox" style="background:url('{{kuva.url}}') center;background-size: cover;">
                                 </div>
                             {% endif %}
-                            {% if not loop.first %}
-                                <div class="naama-kuvabox-thumb col-lg-4" style="background:url('{{kuva.url}}') center;background-size: cover;">
+                        {% endfor %}
+                        {% for kuva in kuvat %}
+                            {% if not (kuva.paakuva) %}
+                                <div class="naama-kuvabox-thumb col-lg-3 col-md-3 col-sm-4" style="background:url('{{kuva.url}}') center;background-size: cover;">
                                 </div>
                             {% endif %}
                         {% endfor %}
@@ -41,6 +43,7 @@
                             <p><strong>Nick:</strong> {{kayttaja.nick}}</p>
                             <p><strong>Nimi:</strong> {{kayttaja.nimi}}</p>
 
+                            <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/kuvat/edit"><button type="submit" class="btn btn-default">Hallitse kuvia</button></a>
                             <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/edit"><button type="submit" class="btn btn-default">Muokkaa</button></a>
 
                             <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/destroy">

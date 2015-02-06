@@ -86,11 +86,6 @@ class KayttajaController extends BaseController {
         } else  {
             Kayttaja::update($id, $attributes);
 
-//            if (!empty($_FILES['kuva'])) {
-//                $url = Kuva::upload($_FILES['kuva']);
-//                Kuva::create($id, $url);
-//            }
-
             self::redirect_to('/kayttaja/' . $id, array('message' => 'Tietosi on päivitetty.'));
         }
     }

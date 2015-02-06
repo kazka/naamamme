@@ -83,6 +83,21 @@ class Kuva extends BaseModel{
         return $url;
     }
 
+    public static function set_paakuva($uusi_paakuva_id, $kayttaja_id) {
+        $rivit = DB::query("SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id AND paakuva = 'true'", array('kayttaja_id' => $kayttaja_id));
+
+        if (count($rivit) > 0) {
+            $rivi = $rivit[0];
+
+            $vanha_paakuva_id = $rivi['id'];
+
+            if ($vanha_paakuva_id != $uusi_paakuva_id) {
+                DB::query("UPDATE Kuva SET paakuva = 'false' WHERE id = :vanha_paakuva_id", array('vanha_paakuva_id' => $vanha_paakuva_id));
+                DB::query("UPDATE Kuva SET paakuva = 'true' WHERE id = :uusi_paakuva_id", array('uusi_paakuva_id' => $uusi_paakuva_id));
+            }
+        }
+    }
+
     // haetaan tietyn käyttäjän kuvat
     public static function find_by_kayttaja($kayttaja_id) {
         $kuvat = array();
@@ -110,15 +125,15 @@ class Kuva extends BaseModel{
         DB::query("DELETE FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
     }
 
-    public static function check_filetype($file) {
-        $kuva = getimagesize($file);
-        $image_type = $kuva[2];
-
-        if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP))) {
-            return '';
-        }
-        return 'Tiedosto on väärää muotoa.';
-    }
+//    public static function check_filetype($file) {
+//        $kuva = getimagesize($file);
+//        $image_type = $kuva[2];
+//
+//        if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP))) {
+//            return '';
+//        }
+//        return 'Tiedosto on väärää muotoa.';
+//    }
 
 }
 
