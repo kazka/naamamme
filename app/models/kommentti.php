@@ -6,6 +6,8 @@ class Kommentti extends BaseModel{
 
     public function __construct($attributes){
         parent::__construct($attributes);
+
+        $this->validators = array('validate_kommentti');
     }
 
     public static function all() {
@@ -77,12 +79,25 @@ class Kommentti extends BaseModel{
         DB::query("DELETE FROM Kommentti WHERE id = :id", array('id' => $id));
     }
 
-    public static function destroy_from_kayttaja($kayttaja_id) {
-        DB::query("DELETE FROM Kommentti WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
-    }
+//    public static function destroy_from_kayttaja($kayttaja_id) {
+//        DB::query("DELETE FROM Kommentti WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
+//    }
+//
+//    public static function destroy_from_kuva($kuva_id) {
+//        DB::query("DELETE FROM Kommentti WHERE kuva_id = :kuva_id", array('kuva_id' => $kuva_id));
+//    }
 
-    public static function destroy_from_kuva($kuva_id) {
-        DB::query("DELETE FROM Kommentti WHERE kuva_id = :kuva_id", array('kuva_id' => $kuva_id));
+    public function validate_kommentti() {
+        $errors = array();
+
+        if($this->kommenttiteksti == '' || $this->kommenttiteksti == null) {
+            $errors[] = 'Yritit lähettää tyhjän kommentin.';
+        }
+        if(strlen($this->kommenttiteksti) > 500) {
+            $errors[] = 'Kommenttisi on liian pitkä.';
+        }
+
+        return $errors;
     }
 
 }

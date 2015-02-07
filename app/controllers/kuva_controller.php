@@ -8,10 +8,11 @@ class KuvaController extends BaseController {
 //        self::render_view('home.html', array('kayttajat' => $kayttajat));
 //    }
 
-    public static function find($id) {
-        $kuva = Kuva::find($id);
-
-        self::render_view('kuva/kuvantiedot.html', array('kuva' => $kuva));
+    public static function find($id, $kayttaja_id) {
+//        $kayttaja = Kayttaja::find($kayttaja_id);
+//        $kuvat = Kuva::find_by_kayttaja($kayttaja_id);
+//
+//        self::render_view('kayttaja/tiedot.html', array('kuvat' => $kuvat, 'kayttaja' => $kayttaja, 'valittukuva' => $id));
     }
 
     public static function manage($kayttaja_id){
@@ -43,13 +44,12 @@ class KuvaController extends BaseController {
             self::redirect_to('/kayttaja/' . $kayttaja_id, array('message' => 'Kuvien tiedot päivitetty.'));
         } else {
             $kuvat = Kuva::find_by_kayttaja($kayttaja_id);
+
             self::render_view('kuva/hallinta.html', array('errors' => $errors, 'kayttaja_id' => $kayttaja_id, 'kuvat' => $kuvat));
         }
     }
 
     public static function store($kayttaja_id) {
-       // $params = $_POST;
-
         $errors = array();
 
         if (empty($_FILES['kuva']['name'])) {
@@ -65,6 +65,7 @@ class KuvaController extends BaseController {
             self::redirect_to('/kayttaja/' . $kayttaja_id, array('message' => 'Kuva on lisätty.'));
         } else {
             $kuvat = Kuva::find_by_kayttaja($kayttaja_id);
+
             self::render_view('kuva/hallinta.html', array('errors' => $errors, 'kayttaja_id' => $kayttaja_id, 'kuvat' => $kuvat));
         }
 

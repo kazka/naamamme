@@ -98,6 +98,26 @@ class Kuva extends BaseModel{
         }
     }
 
+    public static function find_paakuva($kayttaja_id) {
+        $rivit = DB::query("SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id AND paakuva = 'true'", array('kayttaja_id' => $kayttaja_id));
+
+        if (count($rivit) > 0) {
+            $rivi = $rivit[0];
+
+            $kuva = new Kuva(array(
+                'id' => $rivi['id'],
+                'kayttaja_id' => $rivi['kayttaja_id'],
+                'url' => $rivi['url'],
+                'aika' => $rivi['aika'],
+                'paakuva' => $rivi['paakuva']
+            ));
+
+            return $kuva;
+        }
+
+        return null;
+    }
+
     // haetaan tietyn käyttäjän kuvat
     public static function find_by_kayttaja($kayttaja_id) {
         $kuvat = array();

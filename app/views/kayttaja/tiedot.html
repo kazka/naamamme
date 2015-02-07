@@ -14,24 +14,36 @@
 
             <div class="col-md-12 naama-tiedot">
                 <div class="row">
-                    <div class="col-md-3"></div>
+                    <div class="col-md-3">
+                        <div class="naama-caption">
+                            <p><strong>Nick:</strong> {{kayttaja.nick}}</p>
+                            <p><strong>Nimi:</strong> {{kayttaja.nimi}}</p>
+
+                            <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/edit"><button type="submit" class="btn btn-default">Hallitse kuvia</button></a>
+                            <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/edit"><button type="submit" class="btn btn-default">Muokkaa</button></a>
+
+                            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/destroy">
+                                <button type="submit" class="btn btn-danger">Poista</button>
+                            </form>
+                        </div>
+                        <div class="naama-kuvabox-thumbs">
+
+                            {% for kuva in kuvat %}
+                                <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/{{kuva.id}}">
+                                    <div class="naama-kuvabox-thumb col-lg-6 col-md-6 col-sm-6 {% if (kuva.id == valittukuva.id) %}valittukuva{% endif %}" style="background:url('{{kuva.url}}') center;background-size: cover;"></div>
+                                </a>
+                            {% endfor %}
+
+                        </div>
+                    </div>
                     <div class="col-md-6">
 
                         {% for kuva in kuvat %}
-                            {% if (kuva.paakuva) %}
+                            {% if (kuva.id == valittukuva.id) %}
                                 <div class="naama-kuvabox" style="background:url('{{kuva.url}}') center;background-size: cover;">
                                 </div>
                             {% endif %}
                         {% endfor %}
-                        {% for kuva in kuvat %}
-                            {% if not (kuva.paakuva) %}
-                                <div class="naama-kuvabox-thumb col-lg-3 col-md-3 col-sm-4" style="background:url('{{kuva.url}}') center;background-size: cover;">
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-
-                        <!--<div class="naama-kuvabox" style="background:url('{{base_path}}/assets/img/bcony.jpeg') center;background-size: cover;">
-                        </div>-->
 
                     </div>
                     <div class="col-md-3"></div>
@@ -39,18 +51,7 @@
                 <div class="row">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <div class="naama-caption">
-                            <p><strong>Nick:</strong> {{kayttaja.nick}}</p>
-                            <p><strong>Nimi:</strong> {{kayttaja.nimi}}</p>
 
-                            <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/kuvat/edit"><button type="submit" class="btn btn-default">Hallitse kuvia</button></a>
-                            <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/edit"><button type="submit" class="btn btn-default">Muokkaa</button></a>
-
-                            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/destroy">
-                                <button type="submit" class="btn btn-danger">Poista</button>
-                            </form>
-
-                        </div>
                     </div>
                     <div class="col-md-3"></div>
                 </div>
@@ -61,8 +62,26 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6 kommentit">
+
             <h3>Kommentit</h3>
-            <button type="submit" class="btn btn-primary">Kommentoi</button>
+
+            {% for kommentti in kommentit %}
+                <div class="row">
+                    <div class="col-md-12 kommentti"><strong>{{kommentti.aika}} {{kommentti.kayttaja_id}}:</strong> {{kommentti.kommenttiteksti}}</div>
+                </div>
+            {% endfor %}
+
+            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/{{valittukuva.id}}/kommentti/add">
+                <div class="form-group">
+                    <label>{{user_logged_in.nick}}:</label>
+                    <textarea class="form-control" value="" type="textarea" name="kommenttiteksti"></textarea>
+                    <!--<input type="hidden" value="{{user_logged_in.id}}" name="kommentoija" />-->
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Lähetä kommentti</button>
+                </div>
+            </form>
+
         </div>
         <div class="col-md-3"></div>
     </div>

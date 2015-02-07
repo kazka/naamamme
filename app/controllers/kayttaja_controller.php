@@ -9,11 +9,12 @@ class KayttajaController extends BaseController {
         self::render_view('home.html', array('kayttajat' => $kayttajat, 'kuvat' => $kuvat));
     }
 
-    public static function find($id) {
+    public static function find($id, $valittukuva) {
         $kayttaja = Kayttaja::find($id);
         $kuvat = Kuva::find_by_kayttaja($id);
+        $kommentit = Kommentti::find_by_kuva($valittukuva->id);
 
-        self::render_view('kayttaja/tiedot.html', array('kayttaja' => $kayttaja, 'kuvat' => $kuvat));
+        self::render_view('kayttaja/tiedot.html', array('kayttaja' => $kayttaja, 'kuvat' => $kuvat, 'valittukuva' => $valittukuva, 'kommentit' => $kommentit));
     }
 
     public static function store() {

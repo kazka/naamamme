@@ -20,7 +20,7 @@
         <div class="col-md-6">
 
             <br />
-            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja_id}}/kuvat/edit" enctype="multipart/form-data">
+            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja_id}}/kuva/edit" enctype="multipart/form-data">
 
                 <div class="row">
                     <table class="kuvienhallinta table table-hover table-bordered">
@@ -48,11 +48,10 @@
 
             <h1>Lisää uusi kuva</h1>
 
-            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja_id}}/kuvat/add" enctype="multipart/form-data">
+            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja_id}}/kuva/add" enctype="multipart/form-data">
                 <div class="form-group">
                     <input class="form-control" value="" type="file" name="kuva">
                 </div>
-                <!--<input type="hidden" value="{{kayttaja_id}}" name="kayttaja_id" />-->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Lisää kuva</button>
                 </div>

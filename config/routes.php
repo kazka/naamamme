@@ -26,7 +26,7 @@
   });
 
   $app->get('/kayttaja/:id', function($id){
-    KayttajaController::find($id);
+    KayttajaController::find($id, Kuva::find_paakuva($id));
   });
 
   $app->get('/kayttaja/:id/edit', function($id) {
@@ -57,14 +57,22 @@
     KayttajaController::logout();
   });
 
-  $app->get('/kayttaja/:id/kuvat/edit', function($kayttaja_id) {
-    KuvaController::manage($kayttaja_id);
+  $app->get('/kayttaja/:id/kuva/edit', function($id) {
+    KuvaController::manage($id);
   });
 
-  $app->post('/kayttaja/:id/kuvat/edit', function($kayttaja_id) {
-    KuvaController::update($kayttaja_id);
+  $app->post('/kayttaja/:id/kuva/edit', function($id) {
+    KuvaController::update($id);
   });
 
-  $app->post('/kayttaja/:id/kuvat/add', function($kayttaja_id){
-    KuvaController::store($kayttaja_id);
+  $app->post('/kayttaja/:id/kuva/add', function($id){
+    KuvaController::store($id);
+  });
+
+  $app->get('/kayttaja/:id/kuva/:kuva_id', function($id, $kuva_id) {
+    KayttajaController::find($id, Kuva::find($kuva_id));
+  });
+
+  $app->post('/kayttaja/:id/kuva/:kuva_id/kommentti/add', function($id, $kuva_id){
+    KommenttiController::store($id, $kuva_id);
   });
