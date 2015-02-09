@@ -5,7 +5,7 @@
   <div class="hakurivi">
     <div class="col-md-12" style="text-align:center;">
       <h1 class="otsikko">Naamamme</h1>
-      <input name="haku" class="haku" type="text" placeholder="Hae nimellä tai nickillä..." />
+      <input name="haku" id="haku" type="text" placeholder="Hae nimellä tai nickillä..." />
     </div>
   </div>
 
@@ -29,8 +29,8 @@
         {% endif %}
       {% endfor %}
       <div class="naama-caption">
-        <h4><a href="{{base_path}}/kayttaja/{{kayttaja.id}}" class="naama-linkki">{{kayttaja.nick}}</a></h4>
-        <p>{{kayttaja.nimi}}</p>
+        <h4><a href="{{base_path}}/kayttaja/{{kayttaja.id}}" class="naama-linkki naama-nick">{{kayttaja.nick}}</a></h4>
+        <p class="naama-nimi">{{kayttaja.nimi}}</p>
       </div>
     </div>
     {% endfor %}

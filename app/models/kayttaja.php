@@ -91,6 +91,20 @@ class Kayttaja extends BaseModel{
         return Kuva::find_by_kayttaja($this->id);
     }
 
+//    public function get_nick($id) {
+//        $rivit = DB::query("SELECT * FROM Kayttaja WHERE id = :id", array('id' => $id));
+//
+//        if (count($rivit) > 0) {
+//            $rivi = $rivit[0];
+//
+//            $nick = $rivi['nick'];
+//
+//            return $nick;
+//        }
+//
+//        return null;
+//    }
+
     public function validate_nick() {
         $errors = array();
 

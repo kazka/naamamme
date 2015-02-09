@@ -18,8 +18,6 @@ class KommenttiController extends BaseController {
             $kommentoija_id = $_SESSION['kayttaja'];
         }
 
-        error_log("käyttäjä: " . $kommentoija_id);
-
         $attributes = array(
             'kayttaja_id' => $kommentoija_id,
             'kuva_id' => $kuva_id,
@@ -35,9 +33,10 @@ class KommenttiController extends BaseController {
 
             self::redirect_to('/kayttaja/' . $kayttaja_id . '/kuva/' . $kuva_id, array('message' => 'Kommenttisi on lisätty.'));
         } else {
-            self::render_view('kayttaja/tiedot.html', array('errors' => $errors, 'attributes' => $attributes));
+            self::redirect_to('/kayttaja/' . $kayttaja_id . '/kuva/' . $kuva_id, array('errors' => $errors, 'attributes' => $attributes));
         }
     }
+
 }
 
 ?>

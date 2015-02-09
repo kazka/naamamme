@@ -76,3 +76,7 @@
   $app->post('/kayttaja/:id/kuva/:kuva_id/kommentti/add', function($id, $kuva_id){
     KommenttiController::store($id, $kuva_id);
   });
+
+  $app->post('/kayttaja/:id/kuva/:kuva_id/tykkays/add', function($id, $kuva_id){
+    TykkaysController::store($id, $kuva_id);
+  });

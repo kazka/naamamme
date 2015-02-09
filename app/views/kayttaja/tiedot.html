@@ -12,6 +12,16 @@
             </div>
             {% endif %}
 
+            {% if errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in errors %}
+                    <li>{{error}}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
             <div class="col-md-12 naama-tiedot">
                 <div class="row">
                     <div class="col-md-3">
@@ -19,12 +29,15 @@
                             <p><strong>Nick:</strong> {{kayttaja.nick}}</p>
                             <p><strong>Nimi:</strong> {{kayttaja.nimi}}</p>
 
+                            {% if (user_logged_in.id == kayttaja.id) %}
                             <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/edit"><button type="submit" class="btn btn-default">Hallitse kuvia</button></a>
                             <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/edit"><button type="submit" class="btn btn-default">Muokkaa</button></a>
 
-                            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/destroy">
+                            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/destroy" style="margin-top: 10px;" class="destroy-form" data-confirm="Haluatko varmasti poistaa käyttäjän?">
                                 <button type="submit" class="btn btn-danger">Poista</button>
                             </form>
+                            {% endif %}
+
                         </div>
                         <div class="naama-kuvabox-thumbs">
 
@@ -45,47 +58,45 @@
                             {% endif %}
                         {% endfor %}
 
-                    </div>
-                    <div class="col-md-3"></div>
-                </div>
-                <div class="row">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
+                        {% if user_logged_in %}
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6 kommentit" style="text-align: center;">
+
+                                <div class="glyphicon glyphicon-heart"> <span style="color:#000000;">{{valittukuva.tykkaykset}}</span></div>
+                                <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/{{valittukuva.id}}/tykkays/add">
+                                    <button type="submit" class="btn btn-pinkki">Tykkää <3</button>
+                                </form>
+
+                                <h3 style="margin-bottom: 20px;">Kommentit</h3>
+
+                                {% for kommentti in kommentit %}
+                                <div class="row">
+                                    <div class="col-md-12 kommentti"><span class="aika">{{kommentti.aika|date('d.m.Y H:h')}}</span><br/><a href="{{base_path}}/kayttaja/{{kommentti.kayttaja_id}}">{{kommentti.nick}}</a>: </strong>{{kommentti.kommenttiteksti}}</div>
+                                </div>
+                                {% endfor %}
+
+                                <br/>
+                                <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/{{valittukuva.id}}/kommentti/add">
+                                    <div class="form-group">
+                                        <label>{{user_logged_in.nick}}:</label>
+                                        <textarea class="form-control" value="" type="textarea" name="kommenttiteksti"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Lähetä kommentti</button>
+                                    </div>
+                                </form>
+
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+                        {% endif %}
 
                     </div>
                     <div class="col-md-3"></div>
                 </div>
             </div>
     </div>
-
-    {% if user_logged_in %}
-    <div class="row">
-        <div class="col-md-3"></div>
-        <div class="col-md-6 kommentit">
-
-            <h3>Kommentit</h3>
-
-            {% for kommentti in kommentit %}
-                <div class="row">
-                    <div class="col-md-12 kommentti"><strong>{{kommentti.aika}} {{kommentti.kayttaja_id}}:</strong> {{kommentti.kommenttiteksti}}</div>
-                </div>
-            {% endfor %}
-
-            <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/{{valittukuva.id}}/kommentti/add">
-                <div class="form-group">
-                    <label>{{user_logged_in.nick}}:</label>
-                    <textarea class="form-control" value="" type="textarea" name="kommenttiteksti"></textarea>
-                    <!--<input type="hidden" value="{{user_logged_in.id}}" name="kommentoija" />-->
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Lähetä kommentti</button>
-                </div>
-            </form>
-
-        </div>
-        <div class="col-md-3"></div>
-    </div>
-    {% endif %}
 
 </div>
 

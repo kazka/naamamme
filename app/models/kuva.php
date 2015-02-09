@@ -145,15 +145,11 @@ class Kuva extends BaseModel{
         DB::query("DELETE FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
     }
 
-//    public static function check_filetype($file) {
-//        $kuva = getimagesize($file);
-//        $image_type = $kuva[2];
-//
-//        if(in_array($image_type , array(IMAGETYPE_GIF , IMAGETYPE_JPEG ,IMAGETYPE_PNG , IMAGETYPE_BMP))) {
-//            return '';
-//        }
-//        return 'Tiedosto on väärää muotoa.';
-//    }
+    public function tykkaykset() {
+        $tykkaykset = Tykkays::find_by_kuva($this->id);
+
+        return count($tykkaykset);
+    }
 
 }
 

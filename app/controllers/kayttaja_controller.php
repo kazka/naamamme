@@ -45,6 +45,8 @@ class KayttajaController extends BaseController {
             $url = Kuva::upload($_FILES['kuva']);
             Kuva::create($id, $url);
 
+            $_SESSION['kayttaja'] = $id;
+
             self::redirect_to('/kayttaja/' . $id, array('message' => 'Kiitos liittymisestä!'));
         } else {
             self::render_view('kayttaja/liity.html', array('errors' => $errors, 'attributes' => $attributes));
@@ -115,6 +117,7 @@ class KayttajaController extends BaseController {
 
         self::redirect_to('/', array('message' => "Olet kirjautunut ulos 3:"));
     }
+
 }
 
 ?>
