@@ -53,7 +53,7 @@ class Kommentti extends BaseModel{
         $kuva_id = $attributes['kuva_id'];
         $kommenttiteksti = $attributes['kommenttiteksti'];
 
-        DB::query("INSERT INTO Kommentti (kayttaja_id, kuva_id, kommenttiteksti, aika) VALUES ('$kayttaja_id', '$kuva_id', '$kommenttiteksti', 'NOW()')");
+        DB::query("INSERT INTO Kommentti (kayttaja_id, kuva_id, kommenttiteksti, aika) VALUES (:kayttaja_id, :kuva_id, :kommenttiteksti, 'NOW()')", array('kayttaja_id' => $kayttaja_id, 'kuva_id' => $kuva_id, 'kommenttiteksti' => $kommenttiteksti));
     }
 
     // haetaan tietyn kuvan kommentit

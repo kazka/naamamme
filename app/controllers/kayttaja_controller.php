@@ -28,16 +28,10 @@ class KayttajaController extends BaseController {
 
         $kayttaja = new Kayttaja($attributes);
 
-        $errors = $kayttaja->errors();
+        $errors_kayttaja = $kayttaja->errors();
+        $errors_kuva = Kuva::validate_kuva($_FILES['kuva']['name']);
 
-        if (empty($_FILES['kuva']['name'])) {
-            $errors[] = 'Kuva ei saa olla tyhjä.';
-        }
-        //if (!getimagesize($_FILES['kuva'])) {
-        //    $errors[] = 'Kuva on väärää muotoa.';
-        //}
-
-        //$errors[] = Kuva::check_filetype($_FILES['kuva']['name']);
+        $errors = array_merge($errors_kayttaja, $errors_kuva);
 
         if(count($errors) == 0) {
             $id = Kayttaja::create($attributes);

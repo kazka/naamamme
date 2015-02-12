@@ -51,7 +51,7 @@ class Kayttaja extends BaseModel{
         $nimi = $attributes['nimi'];
         $salasana = $attributes['salasana'];
 
-        $kayttaja = DB::query("INSERT INTO Kayttaja (nick, nimi, salasana) VALUES('$nick', '$nimi', '$salasana') RETURNING id");
+        $kayttaja = DB::query("INSERT INTO Kayttaja (nick, nimi, salasana) VALUES(:nick, :nimi, :salasana) RETURNING id", array('nick' => $nick, 'nimi' => $nimi, 'salasana' => $salasana));
 
         return $kayttaja[0]['id'];
     }
@@ -61,7 +61,6 @@ class Kayttaja extends BaseModel{
     }
 
     public static function update($id, $attributes) {
-        //$nick = $attributes['nick'];
         $nimi = $attributes['nimi'];
         $salasana = $attributes['salasana'];
 
@@ -90,20 +89,6 @@ class Kayttaja extends BaseModel{
     public function kuvat() {
         return Kuva::find_by_kayttaja($this->id);
     }
-
-//    public function get_nick($id) {
-//        $rivit = DB::query("SELECT * FROM Kayttaja WHERE id = :id", array('id' => $id));
-//
-//        if (count($rivit) > 0) {
-//            $rivi = $rivit[0];
-//
-//            $nick = $rivi['nick'];
-//
-//            return $nick;
-//        }
-//
-//        return null;
-//    }
 
     public function validate_nick() {
         $errors = array();

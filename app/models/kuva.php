@@ -54,7 +54,7 @@ class Kuva extends BaseModel{
             $paakuva = 'false';
         }
 
-        DB::query("INSERT INTO Kuva (kayttaja_id, url, aika, paakuva) VALUES ('$kayttaja_id', '$url', 'NOW()', '$paakuva')");
+        DB::query("INSERT INTO Kuva (kayttaja_id, url, aika, paakuva) VALUES (:kayttaja_id, :url, 'NOW()', :paakuva) RETURNING id", array('kayttaja_id' => $kayttaja_id, 'url' => $url, 'paakuva' => $paakuva));
     }
 
     public static function upload($file) {
@@ -149,6 +149,19 @@ class Kuva extends BaseModel{
         $tykkaykset = Tykkays::find_by_kuva($this->id);
 
         return count($tykkaykset);
+    }
+
+    public static function validate_kuva($file) {
+        $errors = array();
+
+        if (empty($file)) {
+            $errors[] = 'Kuva ei saa olla tyhjä.';
+        }
+        if(!preg_match("/\.(gif|png|jpg|jpeg)$/", $file)) {
+            $errors[] = 'Kuva on väärää muotoa.';
+        }
+
+        return $errors;
     }
 
 }

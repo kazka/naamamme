@@ -50,15 +50,9 @@ class KuvaController extends BaseController {
     }
 
     public static function store($kayttaja_id) {
-        $errors = array();
-
-        if (empty($_FILES['kuva']['name'])) {
-            $errors[] = 'Kuva ei saa olla tyhjä.';
-        }
+        $errors = Kuva::validate_kuva($_FILES['kuva']['name']);
 
         if(count($errors) == 0) {
-        //    $kayttaja_id = $params['kayttaja_id'];
-
             $url = Kuva::upload($_FILES['kuva']);
             Kuva::create($kayttaja_id, $url);
 
