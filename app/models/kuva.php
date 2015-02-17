@@ -27,7 +27,8 @@ class Kuva extends BaseModel{
     }
 
     public static function find($id) {
-        $rivit = DB::query('SELECT * FROM Kuva WHERE id = :id LIMIT 1', array('id' => $id));
+        $rivit = DB::query('SELECT * FROM Kuva WHERE id = :id LIMIT 1',
+            array('id' => $id));
 
         if (count($rivit) > 0) {
             $rivi = $rivit[0];
@@ -48,13 +49,15 @@ class Kuva extends BaseModel{
 
     public static function create($kayttaja_id, $url) {
         $paakuva = 'true';
-        $kuvat = DB::query("SELECT COUNT(*) as kuvia FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
+        $kuvat = DB::query("SELECT COUNT(*) as kuvia FROM Kuva WHERE kayttaja_id = :kayttaja_id",
+            array('kayttaja_id' => $kayttaja_id));
 
         if(($kuvat[0]['kuvia']) >= 1) {
             $paakuva = 'false';
         }
 
-        DB::query("INSERT INTO Kuva (kayttaja_id, url, aika, paakuva) VALUES (:kayttaja_id, :url, 'NOW()', :paakuva) RETURNING id", array('kayttaja_id' => $kayttaja_id, 'url' => $url, 'paakuva' => $paakuva));
+        DB::query("INSERT INTO Kuva (kayttaja_id, url, aika, paakuva) VALUES (:kayttaja_id, :url, 'NOW()', :paakuva) RETURNING id",
+            array('kayttaja_id' => $kayttaja_id, 'url' => $url, 'paakuva' => $paakuva));
     }
 
     public static function upload($file) {
@@ -84,7 +87,8 @@ class Kuva extends BaseModel{
     }
 
     public static function set_paakuva($uusi_paakuva_id, $kayttaja_id) {
-        $rivit = DB::query("SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id AND paakuva = 'true'", array('kayttaja_id' => $kayttaja_id));
+        $rivit = DB::query("SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id AND paakuva = 'true'",
+            array('kayttaja_id' => $kayttaja_id));
 
         if (count($rivit) > 0) {
             $rivi = $rivit[0];
@@ -92,14 +96,17 @@ class Kuva extends BaseModel{
             $vanha_paakuva_id = $rivi['id'];
 
             if ($vanha_paakuva_id != $uusi_paakuva_id) {
-                DB::query("UPDATE Kuva SET paakuva = 'false' WHERE id = :vanha_paakuva_id", array('vanha_paakuva_id' => $vanha_paakuva_id));
-                DB::query("UPDATE Kuva SET paakuva = 'true' WHERE id = :uusi_paakuva_id", array('uusi_paakuva_id' => $uusi_paakuva_id));
+                DB::query("UPDATE Kuva SET paakuva = 'false' WHERE id = :vanha_paakuva_id",
+                    array('vanha_paakuva_id' => $vanha_paakuva_id));
+                DB::query("UPDATE Kuva SET paakuva = 'true' WHERE id = :uusi_paakuva_id",
+                    array('uusi_paakuva_id' => $uusi_paakuva_id));
             }
         }
     }
 
     public static function find_paakuva($kayttaja_id) {
-        $rivit = DB::query("SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id AND paakuva = 'true'", array('kayttaja_id' => $kayttaja_id));
+        $rivit = DB::query("SELECT * FROM Kuva WHERE kayttaja_id = :kayttaja_id AND paakuva = 'true'",
+            array('kayttaja_id' => $kayttaja_id));
 
         if (count($rivit) > 0) {
             $rivi = $rivit[0];
@@ -142,7 +149,8 @@ class Kuva extends BaseModel{
     }
 
     public static function destroy_from_kayttaja($kayttaja_id) {
-        DB::query("DELETE FROM Kuva WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
+        DB::query("DELETE FROM Kuva WHERE kayttaja_id = :kayttaja_id",
+            array('kayttaja_id' => $kayttaja_id));
     }
 
     public function tykkaykset() {

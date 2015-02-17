@@ -1,0 +1,1 @@
+UPDATE Kayttaja SET salasana = md5('kaka123') WHERE id = 1;

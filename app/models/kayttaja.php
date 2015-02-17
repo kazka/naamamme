@@ -7,7 +7,7 @@ class Kayttaja extends BaseModel{
     public function __construct($attributes){
         parent::__construct($attributes);
 
-        $this->validators = array('validate_nick', 'validate_nimi');
+        $this->validators = array('validate_nick', 'validate_nimi', 'validate_salasana');
     }
 
     public static function all() {
@@ -28,7 +28,8 @@ class Kayttaja extends BaseModel{
     }
 
     public static function find($id) {
-        $rivit = DB::query('SELECT * FROM Kayttaja WHERE id = :id LIMIT 1', array('id' => $id));
+        $rivit = DB::query('SELECT * FROM Kayttaja WHERE id = :id LIMIT 1',
+            array('id' => $id));
 
         if (count($rivit) > 0) {
             $rivi = $rivit[0];
@@ -51,7 +52,10 @@ class Kayttaja extends BaseModel{
         $nimi = $attributes['nimi'];
         $salasana = $attributes['salasana'];
 
-        $kayttaja = DB::query("INSERT INTO Kayttaja (nick, nimi, salasana) VALUES(:nick, :nimi, :salasana) RETURNING id", array('nick' => $nick, 'nimi' => $nimi, 'salasana' => $salasana));
+        $salasana_hash = md5($salasana);
+
+        $kayttaja = DB::query("INSERT INTO Kayttaja (nick, nimi, salasana) VALUES(:nick, :nimi, :salasana) RETURNING id",
+            array('nick' => $nick, 'nimi' => $nimi, 'salasana' => $salasana_hash));
 
         return $kayttaja[0]['id'];
     }
@@ -64,15 +68,25 @@ class Kayttaja extends BaseModel{
         $nimi = $attributes['nimi'];
         $salasana = $attributes['salasana'];
 
-        DB::query("UPDATE Kayttaja SET nimi = :nimi, salasana = :salasana WHERE id = :id", array('id' => $id, 'nimi' => $nimi, 'salasana' => $salasana));
+        $salasana_hash = md5($salasana);
+
+        DB::query("UPDATE Kayttaja SET nimi = :nimi, salasana = :salasana WHERE id = :id",
+            array('id' => $id, 'nimi' => $nimi, 'salasana' => $salasana_hash));
     }
 
     public static function authenticate($nick, $salasana) {
-        $rivit = DB::query("SELECT * FROM Kayttaja WHERE nick = :nick AND salasana = :salasana", array('nick' => $nick, 'salasana' => $salasana));
+        $rivit = DB::query("SELECT * FROM Kayttaja WHERE nick = :nick",
+            array('nick' => $nick));
+
+        $salasana_hash = '';
 
         if(count($rivit) == 0) {
             return false;
         } else {
+            $salasana_hash = $rivit[0]['salasana'];
+        }
+
+        if ($salasana_hash == md5($salasana)) {
             $rivi = $rivit[0];
 
             $kayttaja = new Kayttaja(array(
@@ -83,6 +97,8 @@ class Kayttaja extends BaseModel{
             ));
 
             return $kayttaja;
+        } else {
+            return false;
         }
     }
 
@@ -100,7 +116,8 @@ class Kayttaja extends BaseModel{
             $errors[] = 'Nickin on oltava vähintään 3 merkkiä pitkä.';
         }
 
-        $rivit = DB::query("SELECT COUNT(*) as riveja FROM Kayttaja WHERE nick = :nick", array('nick' => $this->nick));
+        $rivit = DB::query("SELECT COUNT(*) as riveja FROM Kayttaja WHERE nick = :nick",
+            array('nick' => $this->nick));
 
         if(($rivit[0]['riveja']) > 0 ) {
             $errors[] = 'Nick on varattu.';
@@ -117,6 +134,19 @@ class Kayttaja extends BaseModel{
         }
         if(strlen($this->nimi) < 3) {
             $errors[] = 'Nimen on oltava vähintään 3 merkkiä pitkä.';
+        }
+
+        return $errors;
+    }
+
+    public function validate_salasana() {
+        $errors = array();
+
+        if($this->salasana == '' || $this->salasana == null) {
+            $errors[] = 'Salasana ei saa olla tyhjä.';
+        }
+        if(strlen($this->salasana) < 6) {
+            $errors[] = 'Salasanan on oltava vähintään 6 merkkiä pitkä.';
         }
 
         return $errors;

@@ -63,6 +63,8 @@ class KayttajaController extends BaseController {
         self::check_logged_in();
         $kayttaja = Kayttaja::find($id);
 
+        $salasana = md5($kayttaja->salasana);
+
         self::render_view('kayttaja/muokkaus.html', array('attributes' => $kayttaja));
     }
 
@@ -77,6 +79,10 @@ class KayttajaController extends BaseController {
 
         $kayttaja = new Kayttaja($attributes);
         $errors = $kayttaja->validate_nimi();
+        $salasana_errors = $kayttaja->validate_salasana();
+        foreach ($salasana_errors as $error) {
+            $errors[] = $error;
+        }
 
         if(count($errors) > 0) {
             self::render_view('kayttaja/muokkaus.html', array('errors' => $errors, 'attributes' => $attributes));

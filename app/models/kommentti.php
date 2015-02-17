@@ -29,7 +29,8 @@ class Kommentti extends BaseModel{
     }
 
     public static function find($id) {
-        $rivit = DB::query('SELECT * FROM Kommentti WHERE id = :id LIMIT 1', array('id' => $id));
+        $rivit = DB::query('SELECT * FROM Kommentti WHERE id = :id LIMIT 1',
+            array('id' => $id));
 
         if (count($rivit) > 0) {
             $rivi = $rivit[0];
@@ -53,14 +54,16 @@ class Kommentti extends BaseModel{
         $kuva_id = $attributes['kuva_id'];
         $kommenttiteksti = $attributes['kommenttiteksti'];
 
-        DB::query("INSERT INTO Kommentti (kayttaja_id, kuva_id, kommenttiteksti, aika) VALUES (:kayttaja_id, :kuva_id, :kommenttiteksti, 'NOW()')", array('kayttaja_id' => $kayttaja_id, 'kuva_id' => $kuva_id, 'kommenttiteksti' => $kommenttiteksti));
+        DB::query("INSERT INTO Kommentti (kayttaja_id, kuva_id, kommenttiteksti, aika) VALUES (:kayttaja_id, :kuva_id, :kommenttiteksti, 'NOW()')",
+            array('kayttaja_id' => $kayttaja_id, 'kuva_id' => $kuva_id, 'kommenttiteksti' => $kommenttiteksti));
     }
 
     // haetaan tietyn kuvan kommentit
     public static function find_by_kuva($kuva_id) {
         $kommentit = array();
 
-        $rivit = DB::query('SELECT * FROM Kommentti WHERE kuva_id = :kuva_id', array('kuva_id' => $kuva_id));
+        $rivit = DB::query('SELECT * FROM Kommentti WHERE kuva_id = :kuva_id',
+            array('kuva_id' => $kuva_id));
 
         foreach ($rivit as $rivi) {
             $kommentit[] = new Kommentti(array(
@@ -76,7 +79,8 @@ class Kommentti extends BaseModel{
     }
 
     public static function destroy($id) {
-        DB::query("DELETE FROM Kommentti WHERE id = :id", array('id' => $id));
+        DB::query("DELETE FROM Kommentti WHERE id = :id",
+            array('id' => $id));
     }
 
 //    public static function destroy_from_kayttaja($kayttaja_id) {
