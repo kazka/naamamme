@@ -29,7 +29,7 @@
                             <p><strong>Nick:</strong> {{kayttaja.nick}}</p>
                             <p><strong>Nimi:</strong> {{kayttaja.nimi}}</p>
 
-                            {% if (user_logged_in.id == kayttaja.id) %}
+                            {% if (user_logged_in.id == kayttaja.id) or (user_logged_in.id == 1) %}
                             <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/edit"><button type="submit" class="btn btn-default">Hallitse kuvia</button></a>
                             <a href="{{base_path}}/kayttaja/{{kayttaja.id}}/edit"><button type="submit" class="btn btn-default">Muokkaa</button></a>
 
@@ -60,19 +60,32 @@
 
                         {% if user_logged_in %}
                         <div class="row">
-                            <div class="col-md-3"></div>
-                            <div class="col-md-6 kommentit" style="text-align: center;">
+                            <div class="col-md-12 kommentit" style="text-align: center;">
 
                                 <div class="glyphicon glyphicon-heart"> <span style="color:#000000;">{{valittukuva.tykkaykset}}</span></div>
+
+                                {% set tykkaa = valittukuva.tykkaako(user_logged_in.id) %}
+                                {% if (tykkaa == 0) %}
                                 <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/{{valittukuva.id}}/tykkays/add">
                                     <button type="submit" class="btn btn-pinkki">Tykkää <3</button>
                                 </form>
+                                {% else %}
+                                <p style="color:#FF6699;">Tykätty!</p>
+                                {% endif %}
 
                                 <h3 style="margin-bottom: 20px;">Kommentit</h3>
 
                                 {% for kommentti in kommentit %}
                                 <div class="row">
                                     <div class="col-md-12 kommentti"><span class="aika">{{kommentti.aika|date('d.m.Y H:h')}}</span><br/><a href="{{base_path}}/kayttaja/{{kommentti.kayttaja_id}}">{{kommentti.nick}}</a>: </strong>{{kommentti.kommenttiteksti}}</div>
+                                    {% if (user_logged_in.id == kommentti.kayttaja_id) or (user_logged_in.id == 1) %}
+                                    <div class="col-md-12">
+                                        <form method="post" action="{{base_path}}/kayttaja/{{kayttaja.id}}/kuva/{{valittukuva.id}}/kommentti/{{kommentti.id}}/destroy" style="margin-top: 10px;" class="destroy-form" data-confirm="Haluatko varmasti poistaa kommentin?">
+                                            <button type="submit" class="btn btn-danger">Poista kommentti</button>
+                                        </form>
+                                        <br/>
+                                    </div>
+                                    {% endif %}
                                 </div>
                                 {% endfor %}
 
@@ -88,7 +101,6 @@
                                 </form>
 
                             </div>
-                            <div class="col-md-3"></div>
                         </div>
                         {% endif %}
 

@@ -2,12 +2,6 @@
 
 class KuvaController extends BaseController {
 
-//    public static function index() {
-//        $kuvat = Kuva::all();
-//
-//        self::render_view('home.html', array('kayttajat' => $kayttajat));
-//    }
-
     public static function find($id, $kayttaja_id) {
 //        $kayttaja = Kayttaja::find($kayttaja_id);
 //        $kuvat = Kuva::find_by_kayttaja($kayttaja_id);
@@ -17,7 +11,6 @@ class KuvaController extends BaseController {
 
     public static function manage($kayttaja_id){
         self::check_logged_in();
-        //$kayttaja = Kayttaja::find($kayttaja_id);
         $kuvat = Kuva::find_by_kayttaja($kayttaja_id);
 
         self::render_view('kuva/hallinta.html', array('kuvat' => $kuvat, 'kayttaja_id' => $kayttaja_id));

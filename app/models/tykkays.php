@@ -53,6 +53,19 @@ class Tykkays extends BaseModel{
             array('tykkaaja_id' => $tykkaaja_id, 'tykattava_id' => $tykattava_id));
     }
 
+    public static function tykkaako($tykkaaja_id, $tykattava_id) {
+        $rivit = DB::query('SELECT * FROM Tykkays WHERE tykattava_id = :tykattava_id',
+            array('tykattava_id' => $tykattava_id));
+
+        foreach ($rivit as $rivi) {
+            if ($rivi['tykkaaja_id'] == $tykkaaja_id) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
 
 ?>

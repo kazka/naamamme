@@ -125,7 +125,6 @@ class Kuva extends BaseModel{
         return null;
     }
 
-    // haetaan tietyn käyttäjän kuvat
     public static function find_by_kayttaja($kayttaja_id) {
         $kuvat = array();
 
@@ -157,6 +156,12 @@ class Kuva extends BaseModel{
         $tykkaykset = Tykkays::find_by_kuva($this->id);
 
         return count($tykkaykset);
+    }
+
+    public function tykkaako($kayttaja_id) {
+        $tykkaako = Tykkays::tykkaako($kayttaja_id, $this->id);
+
+        return $tykkaako;
     }
 
     public static function validate_kuva($file) {

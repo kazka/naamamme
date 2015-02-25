@@ -1,13 +1,5 @@
 <?php
 
-//  $app->get('/', function() {
-//    HelloWorldController::index();
-//  });
-
-//  $app->get('/tiedot', function() {
-//    HelloWorldController::tiedot();
-//  });
-
   $app->get('/hiekkalaatikko', function() {
     HelloWorldController::sandbox();
   });
@@ -75,6 +67,10 @@
 
   $app->post('/kayttaja/:id/kuva/:kuva_id/kommentti/add', function($id, $kuva_id){
     KommenttiController::store($id, $kuva_id);
+  });
+
+  $app->post('/kayttaja/:id/kuva/:kuva_id/kommentti/:kommentti_id/destroy', function($id, $kuva_id, $kommentti_id){
+    KommenttiController::destroy($id, $kuva_id, $kommentti_id);
   });
 
   $app->post('/kayttaja/:id/kuva/:kuva_id/tykkays/add', function($id, $kuva_id){

@@ -83,14 +83,6 @@ class Kommentti extends BaseModel{
             array('id' => $id));
     }
 
-//    public static function destroy_from_kayttaja($kayttaja_id) {
-//        DB::query("DELETE FROM Kommentti WHERE kayttaja_id = :kayttaja_id", array('kayttaja_id' => $kayttaja_id));
-//    }
-//
-//    public static function destroy_from_kuva($kuva_id) {
-//        DB::query("DELETE FROM Kommentti WHERE kuva_id = :kuva_id", array('kuva_id' => $kuva_id));
-//    }
-
     public function nick() {
         return Kayttaja::find($this->kayttaja_id)->nick;
     }

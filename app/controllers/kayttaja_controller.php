@@ -72,7 +72,7 @@ class KayttajaController extends BaseController {
         $params = $_POST;
 
         $attributes = array(
-            //'nick' => $params['nick'],
+            'id' => $id,
             'nimi' => $params['nimi'],
             'salasana' => $params['salasana']
         );

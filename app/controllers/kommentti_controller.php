@@ -2,14 +2,6 @@
 
 class KommenttiController extends BaseController {
 
-//    public static function index() {
-//
-//    }
-//
-//    public static function find($id, $valittukuva) {
-
-//    }
-
     public static function store($kayttaja_id, $kuva_id) {
         $params = $_POST;
 
@@ -35,6 +27,12 @@ class KommenttiController extends BaseController {
         } else {
             self::redirect_to('/kayttaja/' . $kayttaja_id . '/kuva/' . $kuva_id, array('errors' => $errors, 'attributes' => $attributes));
         }
+    }
+
+    public static function destroy($kayttaja_id, $kuva_id, $id) {
+        Kommentti::destroy($id);
+
+        self::redirect_to('/kayttaja/' . $kayttaja_id . '/kuva/' . $kuva_id, array('message' => 'Kommentti on poistettu.'));
     }
 
 }
