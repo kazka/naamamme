@@ -26,6 +26,15 @@ class KuvaController extends BaseController {
         if (isset($_POST['poista']) && is_array($_POST['poista']) ) {
             foreach($_POST['poista'] as $poistettava) {
                 if ($poistettava != $paakuva) {
+                    $url = Kuva::find($poistettava)->url;
+                    $tiedosto = '/home/kazkaupp/htdocs/tsoha/uploads/' . substr($url, strrpos($url, '/') + 1);
+
+                    if (file_exists($tiedosto)) {
+                        unlink($tiedosto);
+                    } else {
+                        $errors[] = 'Kuvatiedoston poisto ei onnistunut.';
+                    }
+
                     Kuva::destroy($poistettava);
                 } else {
                     $errors[] = 'Et voi poistaa oletuskuvaasi.';
